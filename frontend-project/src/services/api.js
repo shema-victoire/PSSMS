@@ -25,6 +25,15 @@ API.interceptors.request.use(
   }
 );
 
+// Car API services
+const carService = {
+  getAll: () => API.get('cars'),
+  getById: (plateNumber) => API.get(`cars/${plateNumber}`),
+  create: (data) => API.post('cars', data),
+  update: (plateNumber, data) => API.put(`cars/${plateNumber}`, data),
+  delete: (plateNumber) => API.delete(`cars/${plateNumber}`),
+};
+
 // Parking Slot API services
 const parkingSlotService = {
   getAll: () => API.get('parkingslots'),
@@ -63,6 +72,7 @@ const reportService = {
 };
 
 export {
+  carService,
   parkingSlotService,
   parkingRecordService,
   psPaymentService,

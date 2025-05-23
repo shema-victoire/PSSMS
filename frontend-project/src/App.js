@@ -8,6 +8,10 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
 
+// Car Components
+import CarList from './components/Car/CarList';
+import CarForm from './components/Car/CarForm';
+
 // Parking Slot Components
 import ParkingSlotList from './components/ParkingSlot/ParkingSlotList';
 import ParkingSlotForm from './components/ParkingSlot/ParkingSlotForm';
@@ -66,6 +70,23 @@ function App() {
             <Route path="/dashboard" element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            } />
+            
+            {/* Car Routes */}
+            <Route path="/cars" element={
+              <ProtectedRoute>
+                <CarList />
+              </ProtectedRoute>
+            } />
+            <Route path="/cars/add" element={
+              <ProtectedRoute>
+                <CarForm />
+              </ProtectedRoute>
+            } />
+            <Route path="/cars/edit/:plateNumber" element={
+              <ProtectedRoute>
+                <CarForm />
               </ProtectedRoute>
             } />
             
