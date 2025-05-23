@@ -13,10 +13,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // Import routes
 const authRoutes = require('./routes/auth.routes');
-const carRoutes = require('./routes/car.routes');
-const packageRoutes = require('./routes/package.routes');
-const serviceRoutes = require('./routes/service.routes');
-const cwPaymentRoutes = require('./routes/cwpayment.routes');
 const parkingSlotRoutes = require('./routes/parkingslot.routes');
 const parkingRecordRoutes = require('./routes/parkingrecord.routes');
 const psPaymentRoutes = require('./routes/pspayment.routes');
@@ -24,10 +20,6 @@ const reportRoutes = require('./routes/report.routes');
 
 // Route middleware
 app.use('/api/auth', authRoutes);
-app.use('/api/cars', carRoutes);
-app.use('/api/packages', packageRoutes);
-app.use('/api/services', serviceRoutes);
-app.use('/api/cwpayments', cwPaymentRoutes);
 app.use('/api/parkingslots', parkingSlotRoutes);
 app.use('/api/parkingrecords', parkingRecordRoutes);
 app.use('/api/pspayments', psPaymentRoutes);

@@ -25,42 +25,6 @@ API.interceptors.request.use(
   }
 );
 
-// Car API services
-const carService = {
-  getAll: () => API.get('cars'),
-  getById: (plateNumber) => API.get(`cars/${plateNumber}`),
-  create: (data) => API.post('cars', data),
-  update: (plateNumber, data) => API.put(`cars/${plateNumber}`, data),
-  delete: (plateNumber) => API.delete(`cars/${plateNumber}`),
-};
-
-// Package API services
-const packageService = {
-  getAll: () => API.get('packages'),
-  getById: (packageNumber) => API.get(`packages/${packageNumber}`),
-  create: (data) => API.post('packages', data),
-  update: (packageNumber, data) => API.put(`packages/${packageNumber}`, data),
-  delete: (packageNumber) => API.delete(`packages/${packageNumber}`),
-};
-
-// Service Package API services
-const servicePackageService = {
-  getAll: () => API.get('services'),
-  getById: (recordNumber) => API.get(`services/${recordNumber}`),
-  create: (data) => API.post('services', data),
-  update: (recordNumber, data) => API.put(`services/${recordNumber}`, data),
-  delete: (recordNumber) => API.delete(`services/${recordNumber}`),
-};
-
-// Car Washing Payment API services
-const cwPaymentService = {
-  getAll: () => API.get('cwpayments'),
-  getById: (paymentNumber) => API.get(`cwpayments/${paymentNumber}`),
-  create: (data) => API.post('cwpayments', data),
-  update: (paymentNumber, data) => API.put(`cwpayments/${paymentNumber}`, data),
-  delete: (paymentNumber) => API.delete(`cwpayments/${paymentNumber}`),
-};
-
 // Parking Slot API services
 const parkingSlotService = {
   getAll: () => API.get('parkingslots'),
@@ -95,15 +59,10 @@ const psPaymentService = {
 // Report API services
 const reportService = {
   getReport: (fromDate, toDate) => API.get(`reports?fromDate=${fromDate}&toDate=${toDate}`),
-  getCarWashingReport: (fromDate, toDate) => API.get(`reports/carwashing?fromDate=${fromDate}&toDate=${toDate}`),
   getParkingReport: (fromDate, toDate) => API.get(`reports/parking?fromDate=${fromDate}&toDate=${toDate}`)
 };
 
 export {
-  carService,
-  packageService,
-  servicePackageService,
-  cwPaymentService,
   parkingSlotService,
   parkingRecordService,
   psPaymentService,

@@ -8,18 +8,6 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
 
-// Car Components
-import CarList from './components/Car/CarList';
-import CarForm from './components/Car/CarForm';
-
-// Package Components
-import PackageList from './components/Package/PackageList';
-import PackageForm from './components/Package/PackageForm';
-
-// Service Components
-import ServiceList from './components/Service/ServiceList';
-import ServiceForm from './components/Service/ServiceForm';
-
 // Parking Slot Components
 import ParkingSlotList from './components/ParkingSlot/ParkingSlotList';
 import ParkingSlotForm from './components/ParkingSlot/ParkingSlotForm';
@@ -78,52 +66,6 @@ function App() {
             <Route path="/dashboard" element={
               <ProtectedRoute>
                 <Dashboard />
-              </ProtectedRoute>
-            } />
-            
-            {/* Car Routes */}
-            <Route path="/cars" element={
-              <ProtectedRoute>
-                <CarList />
-              </ProtectedRoute>
-            } />
-            <Route path="/cars/add" element={
-              <ProtectedRoute>
-                <CarForm />
-              </ProtectedRoute>
-            } />
-            <Route path="/cars/edit/:plateNumber" element={
-              <ProtectedRoute>
-                <CarForm />
-              </ProtectedRoute>
-            } />
-            
-            {/* Package Routes */}
-            <Route path="/packages" element={
-              <ProtectedRoute>
-                <PackageList />
-              </ProtectedRoute>
-            } />
-            <Route path="/packages/add" element={
-              <ProtectedRoute>
-                <PackageForm />
-              </ProtectedRoute>
-            } />
-            <Route path="/packages/edit/:packageNumber" element={
-              <ProtectedRoute>
-                <PackageForm />
-              </ProtectedRoute>
-            } />
-            
-            {/* Service Routes */}
-            <Route path="/services" element={
-              <ProtectedRoute>
-                <ServiceList />
-              </ProtectedRoute>
-            } />
-            <Route path="/services/add" element={
-              <ProtectedRoute>
-                <ServiceForm />
               </ProtectedRoute>
             } />
             

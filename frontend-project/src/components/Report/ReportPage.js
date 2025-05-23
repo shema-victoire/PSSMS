@@ -9,11 +9,6 @@ const ReportPage = () => {
     toDate: new Date().toISOString().split('T')[0] // Default to today
   });
   const [reportData, setReportData] = useState({
-    carWashing: {
-      totalServices: 0,
-      totalRevenue: 0,
-      servicesByPackage: []
-    },
     parking: {
       totalParkings: 0,
       totalRevenue: 0,
@@ -32,9 +27,9 @@ const ReportPage = () => {
       setError(null);
       
       const { fromDate, toDate } = dateRange;
-      const response = await reportService.getReport(fromDate, toDate);
+      const response = await reportService.getParkingReport(fromDate, toDate);
       
-      setReportData(response.data);
+      setReportData({ parking: response.data });
       setLoading(false);
     } catch (err) {
       setError('Error fetching report data');
@@ -58,7 +53,7 @@ const ReportPage = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-6">Business Performance Report</h1>
+      <h1 className="text-2xl font-bold mb-6">Parking Business Report</h1>
       
       {/* Date Filter Form */}
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-6">
@@ -116,51 +111,7 @@ const ReportPage = () => {
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
         </div>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Car Washing Summary */}
-          <div className="bg-white shadow-md rounded p-6">
-            <h2 className="text-xl font-bold mb-4">Car Washing Summary</h2>
-            
-            <div className="mb-6">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-blue-50 p-4 rounded">
-                  <p className="text-sm text-gray-500">Total Services</p>
-                  <p className="text-2xl font-bold">{reportData.carWashing.totalServices}</p>
-                </div>
-                <div className="bg-green-50 p-4 rounded">
-                  <p className="text-sm text-gray-500">Total Revenue</p>
-                  <p className="text-2xl font-bold">{parseInt(reportData.carWashing.totalRevenue).toLocaleString()} RWF</p>
-                </div>
-              </div>
-            </div>
-            
-            <h3 className="font-bold mb-2">Services by Package</h3>
-            {reportData.carWashing.servicesByPackage.length > 0 ? (
-              <div className="overflow-x-auto">
-                <table className="min-w-full table-auto">
-                  <thead className="bg-gray-200">
-                    <tr>
-                      <th className="px-4 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Package</th>
-                      <th className="px-4 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Count</th>
-                      <th className="px-4 py-2 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Revenue (RWF)</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200">
-                    {reportData.carWashing.servicesByPackage.map((item, index) => (
-                      <tr key={index} className="hover:bg-gray-50">
-                        <td className="px-4 py-2 whitespace-nowrap text-sm">{item.packageName}</td>
-                        <td className="px-4 py-2 whitespace-nowrap text-sm">{item.count}</td>
-                        <td className="px-4 py-2 whitespace-nowrap text-sm">{parseInt(item.revenue).toLocaleString()} RWF</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            ) : (
-              <p className="text-gray-500 italic">No services recorded in this period</p>
-            )}
-          </div>
-          
+        <div className="grid grid-cols-1 gap-6">
           {/* Parking Summary */}
           <div className="bg-white shadow-md rounded p-6">
             <h2 className="text-xl font-bold mb-4">Parking Summary</h2>
@@ -186,40 +137,6 @@ const ReportPage = () => {
                   <p className="text-sm text-gray-500">Avg. Duration (min)</p>
                   <p className="text-2xl font-bold">{reportData.parking.avgDuration}</p>
                 </div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Overall Business Summary */}
-          <div className="bg-white shadow-md rounded p-6 lg:col-span-2">
-            <h2 className="text-xl font-bold mb-4">Overall Business Summary</h2>
-            
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="bg-indigo-50 p-4 rounded">
-                <p className="text-sm text-gray-500">Total Transactions</p>
-                <p className="text-2xl font-bold">{reportData.carWashing.totalServices + reportData.parking.totalParkings}</p>
-              </div>
-              <div className="bg-indigo-50 p-4 rounded">
-                <p className="text-sm text-gray-500">Total Revenue</p>
-                <p className="text-2xl font-bold">
-                  {parseInt(reportData.carWashing.totalRevenue + reportData.parking.totalRevenue).toLocaleString()} RWF
-                </p>
-              </div>
-              <div className="bg-indigo-50 p-4 rounded">
-                <p className="text-sm text-gray-500">Car Washing %</p>
-                <p className="text-2xl font-bold">
-                  {reportData.carWashing.totalRevenue + reportData.parking.totalRevenue > 0 
-                    ? Math.round((reportData.carWashing.totalRevenue / (reportData.carWashing.totalRevenue + reportData.parking.totalRevenue)) * 100)
-                    : 0}%
-                </p>
-              </div>
-              <div className="bg-indigo-50 p-4 rounded">
-                <p className="text-sm text-gray-500">Parking %</p>
-                <p className="text-2xl font-bold">
-                  {reportData.carWashing.totalRevenue + reportData.parking.totalRevenue > 0 
-                    ? Math.round((reportData.parking.totalRevenue / (reportData.carWashing.totalRevenue + reportData.parking.totalRevenue)) * 100)
-                    : 0}%
-                </p>
               </div>
             </div>
           </div>

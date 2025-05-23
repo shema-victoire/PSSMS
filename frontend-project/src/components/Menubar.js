@@ -24,14 +24,6 @@ const Menubar = () => {
               <>
                 <Link to="/dashboard" className="px-3 py-2 hover:bg-blue-700 rounded">Dashboard</Link>
                 <div className="relative group">
-                  <button className="px-3 py-2 hover:bg-blue-700 rounded">Car Washing</button>
-                  <div className="absolute left-0 mt-1 w-48 bg-white rounded-md shadow-lg hidden group-hover:block z-10">
-                    <Link to="/cars" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Cars</Link>
-                    <Link to="/packages" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Packages</Link>
-                    <Link to="/services" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Services</Link>
-                  </div>
-                </div>
-                <div className="relative group">
                   <button className="px-3 py-2 hover:bg-blue-700 rounded">Parking</button>
                   <div className="absolute left-0 mt-1 w-48 bg-white rounded-md shadow-lg hidden group-hover:block z-10">
                     <Link to="/parkingslots" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Slots</Link>
@@ -69,9 +61,6 @@ const Menubar = () => {
         {currentUser && (
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <Link to="/dashboard" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Dashboard</Link>
-            <Link to="/cars" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Cars</Link>
-            <Link to="/packages" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Packages</Link>
-            <Link to="/services" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Services</Link>
             <Link to="/parkingslots" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Parking Slots</Link>
             <Link to="/parkingrecords" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Parking Records</Link>
             <Link to="/pspayments" className="block px-3 py-2 text-white hover:bg-blue-700 rounded">Payments</Link>
