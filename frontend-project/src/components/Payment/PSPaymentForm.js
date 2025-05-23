@@ -7,9 +7,11 @@ const PSPaymentForm = () => {
   const navigate = useNavigate();
   const isEditMode = !!paymentNumber;
   
+  const PARKING_FEE = 500; // Fixed parking fee in RWF
+  
   const [formData, setFormData] = useState({
     PlateNumber: '',
-    AmountPaid: ''
+    AmountPaid: PARKING_FEE
   });
   
   const [cars, setCars] = useState([]);
@@ -45,7 +47,12 @@ const PSPaymentForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    // If changing plate number, reset amount to fixed fee
+    if (name === 'PlateNumber' && !isEditMode) {
+      setFormData({ ...formData, [name]: value, AmountPaid: PARKING_FEE });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -63,7 +70,7 @@ const PSPaymentForm = () => {
         setSuccessMessage('Payment created successfully');
         setFormData({
           PlateNumber: '',
-          AmountPaid: ''
+          AmountPaid: PARKING_FEE
         });
       }
       setTimeout(() => {
@@ -90,6 +97,11 @@ const PSPaymentForm = () => {
       <h1 className="text-2xl font-bold mb-6">{isEditMode ? 'Edit Parking Payment' : 'Add New Parking Payment'}</h1>
       
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-6" role="alert">
+          <p className="font-bold">Parking Fee Information</p>
+          <p>The standard parking fee is {PARKING_FEE.toLocaleString()} RWF per slot.</p>
+        </div>
+        
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="PlateNumber">
@@ -140,7 +152,11 @@ const PSPaymentForm = () => {
               placeholder="Enter amount in RWF"
               min="0"
               required
+              readOnly={!isEditMode}
             />
+            {!isEditMode && (
+              <p className="text-sm text-gray-500 mt-1">Fixed parking fee of {PARKING_FEE} RWF</p>
+            )}
           </div>
           
           <div className="flex items-center justify-between">

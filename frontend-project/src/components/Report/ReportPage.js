@@ -10,6 +10,7 @@ const ReportPage = () => {
   });
   const [reportData, setReportData] = useState({
     parking: {
+      fixedParkingFee: 500, // Default value for display until data is loaded
       totalParkings: 0,
       totalRevenue: 0,
       activeParking: 0,
@@ -112,6 +113,12 @@ const ReportPage = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-6">
+          {/* Fee Information */}
+          <div className="bg-blue-50 p-4 rounded border-l-4 border-blue-500">
+            <p className="font-bold">Parking Fee Information</p>
+            <p>Fixed parking fee: {reportData.parking.fixedParkingFee.toLocaleString()} RWF per slot</p>
+          </div>
+          
           {/* Parking Summary */}
           <div className="bg-white shadow-md rounded p-6">
             <h2 className="text-xl font-bold mb-4">Parking Summary</h2>

@@ -3,6 +3,9 @@ const router = express.Router();
 const db = require('../config/db');
 const auth = require('../middleware/authMiddleware');
 
+// Define fixed fee for parking
+const PARKING_FEE = 500; // 500 RWF per parking slot
+
 // Middleware to verify dates
 const validateDates = (req, res, next) => {
   const { fromDate, toDate } = req.query;
@@ -27,6 +30,7 @@ router.get('/', [auth.verifyToken, validateDates], async (req, res) => {
   try {
     // Prepare parking report object
     const report = {
+      fixedParkingFee: PARKING_FEE,
       totalParkings: 0,
       totalRevenue: 0,
       activeParking: 0,
@@ -88,6 +92,7 @@ router.get('/parking', [auth.verifyToken, validateDates], async (req, res) => {
   try {
     // Prepare parking report object
     const report = {
+      fixedParkingFee: PARKING_FEE,
       totalParkings: 0,
       totalRevenue: 0,
       activeParking: 0,
