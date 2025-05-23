@@ -13,6 +13,7 @@ const ReportPage = () => {
       fixedParkingFee: 500, // Default value for display until data is loaded
       totalParkings: 0,
       totalRevenue: 0,
+      currentRevenue: 0,
       activeParking: 0,
       avgDuration: 0
     }
@@ -130,7 +131,7 @@ const ReportPage = () => {
                   <p className="text-2xl font-bold">{reportData.parking.totalParkings}</p>
                 </div>
                 <div className="bg-green-50 p-4 rounded">
-                  <p className="text-sm text-gray-500">Total Revenue</p>
+                  <p className="text-sm text-gray-500">Current Revenue</p>
                   <p className="text-2xl font-bold">{parseInt(reportData.parking.totalRevenue).toLocaleString()} RWF</p>
                 </div>
               </div>

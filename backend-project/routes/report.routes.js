@@ -34,6 +34,7 @@ router.get('/', [auth.verifyToken, validateDates], async (req, res) => {
       totalParkings: 0,
       totalRevenue: 0,
       activeParking: 0,
+      currentRevenue: 0,
       avgDuration: 0,
       parkingsByDay: []
     };
@@ -55,17 +56,10 @@ router.get('/', [auth.verifyToken, validateDates], async (req, res) => {
       report.avgDuration = summaryResult[0].avgDuration || 0;
     }
 
-    // Get parking revenue
-    const revenueQuery = `
-      SELECT SUM(AmountPaid) as totalRevenue
-      FROM PSPayment
-      WHERE PaymentDate BETWEEN ? AND ?
-    `;
-    const [revenueResult] = await db.query(revenueQuery, [fromDate, toDate + ' 23:59:59']);
-    
-    if (revenueResult[0]) {
-      report.totalRevenue = revenueResult[0].totalRevenue || 0;
-    }
+    // Calculate current revenue from active parking sessions
+    // Active parking count × fixed fee
+    report.currentRevenue = report.activeParking * PARKING_FEE;
+    report.totalRevenue = report.currentRevenue; // Set total revenue to current revenue
 
     // Get parkings by day
     const dayQuery = `
@@ -96,6 +90,7 @@ router.get('/parking', [auth.verifyToken, validateDates], async (req, res) => {
       totalParkings: 0,
       totalRevenue: 0,
       activeParking: 0,
+      currentRevenue: 0,
       avgDuration: 0,
       parkingsByDay: []
     };
@@ -117,17 +112,10 @@ router.get('/parking', [auth.verifyToken, validateDates], async (req, res) => {
       report.avgDuration = summaryResult[0].avgDuration || 0;
     }
 
-    // Get parking revenue
-    const revenueQuery = `
-      SELECT SUM(AmountPaid) as totalRevenue
-      FROM PSPayment
-      WHERE PaymentDate BETWEEN ? AND ?
-    `;
-    const [revenueResult] = await db.query(revenueQuery, [fromDate, toDate + ' 23:59:59']);
-    
-    if (revenueResult[0]) {
-      report.totalRevenue = revenueResult[0].totalRevenue || 0;
-    }
+    // Calculate current revenue from active parking sessions
+    // Active parking count × fixed fee
+    report.currentRevenue = report.activeParking * PARKING_FEE;
+    report.totalRevenue = report.currentRevenue; // Set total revenue to current revenue
 
     // Get parkings by day
     const dayQuery = `
