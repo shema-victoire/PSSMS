@@ -6,7 +6,7 @@ const auth = require('../middleware/authMiddleware');
 // Get all cars
 router.get('/', auth.verifyToken, async (req, res) => {
   try {
-    const [cars] = await db.query('SELECT * FROM Cars ORDER BY PlateNumber');
+    const [cars] = await db.query('SELECT * FROM Car ORDER BY PlateNumber');
     res.status(200).json(cars);
   } catch (error) {
     console.error('Error fetching cars:', error);
@@ -17,7 +17,7 @@ router.get('/', auth.verifyToken, async (req, res) => {
 // Get a single car by plate number
 router.get('/:plateNumber', auth.verifyToken, async (req, res) => {
   try {
-    const [car] = await db.query('SELECT * FROM Cars WHERE PlateNumber = ?', [req.params.plateNumber]);
+    const [car] = await db.query('SELECT * FROM Car WHERE PlateNumber = ?', [req.params.plateNumber]);
     
     if (car.length === 0) {
       return res.status(404).json({ message: 'Car not found' });
@@ -41,14 +41,14 @@ router.post('/', auth.verifyToken, async (req, res) => {
     }
     
     // Check if car already exists
-    const [existingCar] = await db.query('SELECT * FROM Cars WHERE PlateNumber = ?', [PlateNumber]);
+    const [existingCar] = await db.query('SELECT * FROM Car WHERE PlateNumber = ?', [PlateNumber]);
     if (existingCar.length > 0) {
       return res.status(400).json({ message: 'A car with this plate number already exists' });
     }
     
     // Insert new car
     await db.query(
-      'INSERT INTO Cars (PlateNumber, DriverName, CarType, PhoneNumber) VALUES (?, ?, ?, ?)',
+      'INSERT INTO Car (PlateNumber, DriverName, CarType, PhoneNumber) VALUES (?, ?, ?, ?)',
       [PlateNumber, DriverName, CarType, PhoneNumber]
     );
     
@@ -71,14 +71,14 @@ router.put('/:plateNumber', auth.verifyToken, async (req, res) => {
     }
     
     // Check if car exists
-    const [existingCar] = await db.query('SELECT * FROM Cars WHERE PlateNumber = ?', [plateNumber]);
+    const [existingCar] = await db.query('SELECT * FROM Car WHERE PlateNumber = ?', [plateNumber]);
     if (existingCar.length === 0) {
       return res.status(404).json({ message: 'Car not found' });
     }
     
     // Update car
     await db.query(
-      'UPDATE Cars SET DriverName = ?, CarType = ?, PhoneNumber = ? WHERE PlateNumber = ?',
+      'UPDATE Car SET DriverName = ?, CarType = ?, PhoneNumber = ? WHERE PlateNumber = ?',
       [DriverName, CarType, PhoneNumber, plateNumber]
     );
     
@@ -95,14 +95,14 @@ router.delete('/:plateNumber', auth.verifyToken, async (req, res) => {
     const plateNumber = req.params.plateNumber;
     
     // Check if car exists
-    const [existingCar] = await db.query('SELECT * FROM Cars WHERE PlateNumber = ?', [plateNumber]);
+    const [existingCar] = await db.query('SELECT * FROM Car WHERE PlateNumber = ?', [plateNumber]);
     if (existingCar.length === 0) {
       return res.status(404).json({ message: 'Car not found' });
     }
     
     // Check if car has any related records in ParkingRecords
     const [relatedParkingRecords] = await db.query(
-      'SELECT * FROM ParkingRecords WHERE PlateNumber = ?',
+      'SELECT * FROM ParkingRecord WHERE PlateNumber = ?',
       [plateNumber]
     );
     
@@ -113,7 +113,7 @@ router.delete('/:plateNumber', auth.verifyToken, async (req, res) => {
     }
     
     // Delete car
-    await db.query('DELETE FROM Cars WHERE PlateNumber = ?', [plateNumber]);
+    await db.query('DELETE FROM Car WHERE PlateNumber = ?', [plateNumber]);
     
     res.status(200).json({ message: 'Car deleted successfully' });
   } catch (error) {
